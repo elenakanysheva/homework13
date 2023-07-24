@@ -13,11 +13,6 @@ def item2():
     return Item("Ноутбук", 20000, 5)
 
 
-@pytest.fixture
-def item3():
-    return Item("СуперСмартфон", 50000, 2)
-
-
 def test_item_calculate_total_price(item1, item2):
     assert item1.calculate_total_price() == 200000
     assert item2.calculate_total_price() == 100000
