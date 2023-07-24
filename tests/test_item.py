@@ -31,9 +31,11 @@ def test_item_apply_discount(item1, item2):
     assert item2.price == 16000.0
 
 
-def test_item_name(item1, item3):
+def test_item_name(item1):
+    item1.name = 'Смартфон'
     assert item1.name == 'Смартфон'
-    assert item3.name == 'СуперСмарт'
+    item1.name = 'СуперСмартфон'
+    assert item1.name == 'СуперСмарт'
 
 
 def test_item_instantiate_from_csv():

@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 
 class Item:
     """
@@ -49,7 +50,8 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         cls.all = []
-        with open("../src/items.csv", encoding="windows-1251") as f:
+        file = Path(__file__).parent / 'items.csv'
+        with open(file, encoding="windows-1251") as f:
             DictReader_obj = csv.DictReader(f)
             for item in DictReader_obj:
                 cls(item["name"], item["price"], item["quantity"])
