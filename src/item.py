@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -20,6 +21,12 @@ class Item:
         self.price = price
         self.quantity = quantity
         self.all.append(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f"{self.__name}"
 
     # Геттер для name
     @property
@@ -56,9 +63,6 @@ class Item:
             for item in DictReader_obj:
                 cls(item["name"], item["price"], item["quantity"])
 
-
     @staticmethod
     def string_to_number(string):
         return int(float(string))
-
-
