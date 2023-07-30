@@ -28,6 +28,13 @@ class Item:
     def __str__(self):
         return f"{self.__name}"
 
+    def __add__(self, other):
+        """Складывает экземпляры классов `Phone` и `Item` по количеству товара в магазине"""
+        if not issubclass(other.__class__, self.__class__):
+            raise ValueError('Складывать можно только объекты Item и дочерние от них.')
+        return self.quantity + other.quantity
+
+
     # Геттер для name
     @property
     def name(self):
