@@ -61,9 +61,8 @@ def test_item_str(item1):
 def test_item_add():
     phone1 = Phone("iPhone 14", 120_000, 5, 2)
     item1 = Item("Смартфон", 10000, 20)
+    with pytest.raises(ValueError):
+        item1 + int("10")
     assert phone1.quantity + item1.quantity == 25
     assert phone1.quantity + phone1.quantity == 10
-    with pytest.raises(ValueError):
-        pass
-
 
