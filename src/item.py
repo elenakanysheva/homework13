@@ -3,6 +3,13 @@ from pathlib import Path
 from abc import ABC
 
 
+class InstantiateCSVError(Exception):
+    def __init__(self, item):
+        self.item = item
+        if "name" not in self.item or "quantity" not in self.item or "price" not in self.item:
+            raise Exception('Файл item.csv поврежден')
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -36,7 +43,6 @@ class Item:
             raise ValueError('Складывать можно только объекты Item и дочерние от них.')
         return self.quantity + other.quantity
 
-
     # Геттер для name
     @property
     def name(self):
@@ -67,10 +73,21 @@ class Item:
     def instantiate_from_csv(cls):
         cls.all = []
         file = Path(__file__).parent / 'items.csv'
-        with open(file, encoding="windows-1251") as f:
-            DictReader_obj = csv.DictReader(f)
-            for item in DictReader_obj:
-                cls(item["name"], item["price"], item["quantity"])
+        try:
+            f = open(file)
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+        else:
+            with open(file, encoding="windows-1251") as f:
+                DictReader_obj = csv.DictReader(f)
+                for item in DictReader_obj:
+                    try:
+                        inst_csv = InstantiateCSVError(item)
+                    except Exception as ex:
+                        print(ex)
+                        break
+                    else:
+                        cls(item["name"], item["price"], item["quantity"])
 
     @staticmethod
     def string_to_number(string):
